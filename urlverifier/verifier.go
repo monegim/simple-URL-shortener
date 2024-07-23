@@ -9,7 +9,7 @@ import (
 type VerifyData struct {
 	rawURL                 string
 	urlComponents          *url.URL
-	result                 *Result
+	Result                 *Result
 	httpCheckEnabled       bool
 	allowHttpCheckInterval bool
 }
@@ -26,11 +26,12 @@ func NewVerifier(rawURL string) *VerifyData {
 		rawURL:                 rawURL,
 		allowHttpCheckInterval: false,
 		httpCheckEnabled:       false,
+		Result: &Result{},
 	}
 }
 func (v *VerifyData) Verify() error {
-	v.result.IsURL = govalidator.IsURL(v.rawURL)
-	if v.result.IsURL {
+	v.Result.IsURL = govalidator.IsURL(v.rawURL)
+	if v.Result.IsURL {
 		p, err := url.Parse(v.rawURL)
 		if err != nil {
 			return err
