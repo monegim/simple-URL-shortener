@@ -11,13 +11,15 @@ import (
 var testURLs = []struct {
 	rawURL string
 	isURL  bool
+	isURI  bool
 }{
 	{
 		rawURL: "http://example.com",
 		isURL:  true,
+		isURI:  true,
 	},
 	{
-		rawURL: "example.com",
+		rawURL: "https://example.com",
 		isURL:  true,
 	},
 	{
@@ -30,12 +32,14 @@ var testURLs = []struct {
 	},
 }
 
+var (
+	urlToCheck string
+	verifier   *urlverifier.VerifyData
+	err        error
+	isURI      bool
+)
+
 func TestCheckVerify(t *testing.T) {
-	var (
-		urlToCheck string
-		verifier   *urlverifier.VerifyData
-		err        error
-	)
 
 	for _, test := range testURLs {
 		urlToCheck = test.rawURL
@@ -46,5 +50,13 @@ func TestCheckVerify(t *testing.T) {
 		}
 		assert.Equal(t, verifier.Result.IsURL, test.isURL)
 
+	}
+}
+
+func TestIsRequestURI(t *testing.T) {
+	for _, test := range testURLs {
+		verifier = urlverifier.NewVerifier(test.rawURL)
+		isURI = verifier.IsRequestURI()
+		assert.Equal(t, isURI, test.isURI)
 	}
 }
