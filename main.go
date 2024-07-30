@@ -2,20 +2,35 @@ package main
 
 import (
 	"log"
-
-	"github.com/gin-gonic/gin"
+	"net/http"
+	"os"
 )
 
-
-func main() {
-	
-	r := gin.Default()
-	r.GET("/:catch_all", mainHandler)
-	r.Run(":8081")
+type Server struct {
+	Address string
 }
 
-func mainHandler(ctx *gin.Context) {
+func NewServer(addr string) *Server {
+	return &Server{
+		Address: addr,
+	}
+}
+
+func (s *Server) Start() {
+	log.Fatal(http.ListenAndServe(s.Address, nil))
+}
+
+func main() {
+	addr := os.Getenv("ADDRESS")
+	if addr == "" {
+		addr = ":8080"
+	}
+	http.HandleFunc("/", mainHandler)
+	s := NewServer(addr)
+	s.Start()
+
+}
+
+func mainHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("Main is called")
-	url := ctx.Request.URL
-	log.Println(url, "is hit")
 }
