@@ -19,6 +19,7 @@ func NewServer(addr string) *Server {
 }
 
 func (s *Server) Start() {
+	log.Printf("Starting server on %s", s.Address)
 	log.Fatal(http.ListenAndServe(s.Address, nil))
 }
 
@@ -57,4 +58,6 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	// Input is valid
+	
 }
