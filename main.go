@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"simple-url-shortener/pkg"
 	"simple-url-shortener/urlverifier"
 )
 
@@ -52,6 +53,7 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	// Check if url is valid
 	verifier := urlverifier.NewVerifier(url.URL)
 	err = verifier.Verify()
 	if err != nil {
@@ -59,5 +61,7 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// Input is valid
-	
+	shortenedURL := pkg.URLShortener(url.URL)
+	log.Println(shortenedURL)
+
 }
