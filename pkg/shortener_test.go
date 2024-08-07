@@ -12,13 +12,17 @@ var testCases = []struct {
 	shortened string
 }{
 	{
-	id:        12345,
-	shortened: "dnh",
-},
- {
-	id:        30540,
-	shortened: "h6K",
-},
+		id:        12345,
+		shortened: "dnh",
+	},
+	{
+		id:        30540,
+		shortened: "h6K",
+	},
+	{
+		id:        0,
+		shortened: "a",
+	},
 }
 
 func TestShortener(t *testing.T) {
@@ -26,11 +30,11 @@ func TestShortener(t *testing.T) {
 
 		expected := id2String(test.id)
 		log.Println(expected)
-		assert.Equal(t, expected,test.shortened)
+		assert.Equal(t, expected, test.shortened)
 	}
 }
 
-func TestReverseShortener(t *testing.T)  {
+func TestReverseShortener(t *testing.T) {
 	var expected uint64
 	for _, test := range testCases {
 		expected = string2Id(test.shortened)

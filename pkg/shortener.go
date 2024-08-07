@@ -28,13 +28,13 @@ func id2String(id uint64) string {
 	shortURL := ""
 	number := id
 	for {
-		rem = int(number % base)
-		shortURL = string(ch[rem]) + shortURL
-		number = number / base
 		if number/base == 0 {
 			shortURL = string(ch[number]) + shortURL
 			break
 		}
+		rem = int(number % base)
+		shortURL = string(ch[rem]) + shortURL
+		number = number / base
 	}
 
 	return shortURL
