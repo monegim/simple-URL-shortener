@@ -1,12 +1,15 @@
 package database
 
 import (
+	"context"
 	"os"
 
 	"github.com/redis/go-redis/v9"
 )
 
-func Connect(dbNo int) *redis.Client {
+var Ctx = context.Background()
+
+func Client(dbNo int) *redis.Client {
 	DB_ADDR := os.Getenv("DB_ADDR")
 	if DB_ADDR == "" {
 		DB_ADDR = "localhost:6379"

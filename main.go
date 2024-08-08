@@ -1,67 +1,18 @@
 package main
 
 import (
-	"encoding/json"
-	"log"
 	"net/http"
 	"os"
-	"simple-url-shortener/pkg"
-	"simple-url-shortener/urlverifier"
+	"simple-url-shortener/pkg/routes"
 )
-
-type Server struct {
-	Address string
-}
-
-func NewServer(addr string) *Server {
-	return &Server{
-		Address: addr,
-	}
-}
-
-func (s *Server) Start() {
-	log.Printf("Starting server on %s", s.Address)
-	log.Fatal(http.ListenAndServe(s.Address, nil))
-}
-
-type Data struct {
-	URL string `json:"url"`
-}
 
 func main() {
 	addr := os.Getenv("ADDRESS")
 	if addr == "" {
 		addr = ":8080"
 	}
-	http.HandleFunc("/", mainHandler)
-	s := NewServer(addr)
+	http.HandleFunc("/", routes.ShortenHandler)
+	http.HandleFunc("/api/v1", routes.ShortenHandler)
+	s := routes.NewServer(addr)
 	s.Start()
-
-}
-
-func mainHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Main is called")
-	if r.Method != http.MethodPost {
-		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("Bad Request"))
-		return
-	}
-	defer r.Body.Close()
-	var url Data
-	err := json.NewDecoder(r.Body).Decode(&url)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-	// Check if url is valid
-	verifier := urlverifier.NewVerifier(url.URL)
-	err = verifier.Verify()
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-	// Input is valid
-	shortenedURL := pkg.URLShortener(url.URL)
-	log.Println(shortenedURL)
-
 }
