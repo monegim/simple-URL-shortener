@@ -11,7 +11,7 @@ func main() {
 	if addr == "" {
 		addr = ":8080"
 	}
-	http.HandleFunc("/", routes.ShortenHandler)
+	http.HandleFunc("/", routes.ResolveHandler)
 	http.HandleFunc("/api/v1", routes.ShortenHandler)
 	s := routes.NewServer(addr)
 	s.Start()

@@ -10,6 +10,7 @@ const (
 
 var (
 	charSet = "abcdefghijklmnopqrstuvwxyz"
+	BASE_DOMAIN = "mostafa.com"
 )
 
 func URLShortener(url string) string {

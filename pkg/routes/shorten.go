@@ -13,7 +13,7 @@ type Data struct {
 }
 
 func ShortenHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Main is called")
+	log.Println("ShortenHandler is called")
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte("Bad Request"))
