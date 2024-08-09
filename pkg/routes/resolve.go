@@ -7,4 +7,5 @@ import (
 
 func ResolveHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("Resolved called with the:", r.URL.Path)
+	log.Println(getIp(r.RemoteAddr))
 }

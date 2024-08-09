@@ -9,19 +9,19 @@ const (
 )
 
 var (
-	charSet = "abcdefghijklmnopqrstuvwxyz"
+	charSet     = "abcdefghijklmnopqrstuvwxyz"
 	BASE_DOMAIN = "mostafa.com"
 )
 
-func URLShortener(url string) string {
-	id := getIdFromDB(url)
+func URLShortener(id uint64, url string) string {
+	// id := getIdFromDB(url)
 	shortenedString := id2String(id)
 	return shortenedString
 }
 
-func getIdFromDB(url string) uint64 {
-	return 0
-}
+// func getIdFromDB(url string) uint64 {
+// 	return 0
+// }
 func id2String(id uint64) string {
 	base := uint64(26*2 + 10)
 	ch := buildCharset()
