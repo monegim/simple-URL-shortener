@@ -9,7 +9,7 @@ import (
 func main() {
 	addr := os.Getenv("ADDRESS")
 	if addr == "" {
-		addr = ":8080"
+		addr = ":8081"
 	}
 	http.HandleFunc("/", routes.ResolveHandler)
 	http.HandleFunc("/api/v1", routes.ShortenHandler)
